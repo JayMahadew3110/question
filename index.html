@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #question-container {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #yes-btn {
+            background-color: green;
+            color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        #yes-btn:hover {
+            background-color: green;
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+        }
+
+        #no-btn {
+            background-color: red;
+            color: white;
+            transition: transform 0.3s;
+        }
+        
+        #no-btn:hover {
+            background-color: red;
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+        }
+        #valentine-gif {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        #new-question {
+            color: #ff99cc;
+            display: inline-block;
+            padding: 10px;
+        }
+    </style>
+    <title>Valentine's Question</title>
+</head>
+<body>
+    <div id="question-container">
+        <h2>Baby, do you want to be my valentine <3?</h2>
+        <img id="valentine-gif" src="gif.gif" alt="Valentine's GIF"><br/><br/><br/>
+        <button id="yes-btn" onclick="yes()">Yes</button>
+        <button id="no-btn" onclick="no()">No</button>
+    </div>
+
+    <script>
+        var noButtonClicks = 0; // Counter for "No" button clicks
+
+        function yes() {
+            var questionContainer = document.getElementById('question-container');
+            var questionElement = questionContainer.getElementsByTagName('h2')[0];
+            
+            questionElement.textContent = "YAY UR MY VALENTINE NOW <3333333333333";
+            document.getElementById('yes-btn').style.display = 'none';
+            document.getElementById('no-btn').style.display = 'none';
+            document.getElementById('valentine-gif').src = 'happy.gif';
+        }
+
+        function no() {
+            noButtonClicks++;
+            var questionContainer = document.getElementById('question-container');
+            var questionElement = questionContainer.getElementsByTagName('h2')[0];
+            var yesBtn = document.getElementById('yes-btn');
+            var noBtn = document.getElementById('no-btn');
+
+            if (noButtonClicks == 1) {
+                questionElement.textContent = "Are you sure? Last chance :(";
+                document.getElementById('valentine-gif').src = 'sad.gif';
+            } 
+            else if (noButtonClicks == 2) {
+                questionElement.textContent = "I think you pressed the wrong button :(. Here I'll help you!";
+                yesBtn.style.transform = 'scale(5)';
+                noBtn.style.transform = 'scale(0.8)';
+                noBtn.style.marginLeft = '200px';
+            }
+            else if (noButtonClicks == 3) {
+                questionElement.textContent = "You left me no choice";
+                document.getElementById('valentine-gif').src = 'angry.gif';
+                noBtn.style.marginLeft = '300px';
+                const wrapper = document.getElementById('question-container');
+                const wrapperRect = wrapper.getBoundingClientRect();
+                const noBtnRect = noBtn.getBoundingClientRect();
+                noBtn.addEventListener('mouseover', () => {
+                const i = Math.floor(Math.random() * (wrapperRect.width - noBtnRect.width)) + 1;
+                const j = Math.floor(Math.random() * (wrapperRect.height - noBtnRect.height)) + 1;
+                noBtn.style.marginLeft = i + 'px';
+                noBtn.style.marginTop = j + 'px';
+                });
+            }
+        }
+    </script>
+</body>
+</html>
